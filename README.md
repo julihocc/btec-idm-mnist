@@ -2,7 +2,7 @@
 
 Un solo taller en **tres partes**. La pregunta es siempre la misma: *¿qué hay en esta imagen?*
 
-1. **Parte 1** — la máquina **aprende** a leer dígitos a mano (Keras + MNIST)
+1. **Parte 1** — la máquina **aprende** a leer dígitos (Keras) y **ejecuta** esa red con OpenCV (`cv2.dnn`)
 2. **Parte 2** — visión en **software**: generar y leer un QR, y usarlo en una mini-app (OpenCV)
 3. **Parte 3** — visión en **robótica**: marcadores ArUco, ID + posición (OpenCV)
 
@@ -20,7 +20,7 @@ uv sync
 
 ## Parte 1 — `taller_ia_mnist.ipynb`
 
-Red neuronal simple (MLP) que clasifica dígitos 0–9. Objetivo: **>95%** en prueba (ejecución guardada: **97.23%**).
+Red neuronal simple (MLP) que clasifica dígitos 0–9. Objetivo: **>95%** en prueba (ejecución guardada: **97.08%**). Al final, la misma red corre en OpenCV.
 
 1. Preparar las herramientas
 2. Cargar MNIST
@@ -28,7 +28,8 @@ Red neuronal simple (MLP) que clasifica dígitos 0–9. Objetivo: **>95%** en pr
 4. Diseñar el MLP: 128 ReLU, dropout 20%, 10 softmax
 5. Entrenar 5 épocas
 6. Evaluar y ver las curvas
-7. Mirar predicciones (extra: un dígito a dígito)
+7. Mirar predicciones
+8. Exportar a TFLite y clasificar con `cv2.dnn` (extra: un dígito a dígito)
 
 ```bash
 uv run jupyter notebook taller_ia_mnist.ipynb
@@ -44,7 +45,7 @@ uv run jupyter notebook taller_ia_mnist.ipynb
 
 ## Parte 2 — `taller_vision_qr.ipynb`
 
-Un QR es un **texto** dentro de una imagen. OpenCV lo genera y lo lee; tu código usa el string (catálogo, URL, ticket). No se entrena ninguna red. No hace falta webcam.
+Un QR es un **texto** dentro de una imagen. OpenCV —el mismo `cv2` del paso 8 de la Parte 1— lo genera y lo lee; tu código usa el string (catálogo, URL, ticket). No se entrena ninguna red. No hace falta webcam.
 
 1. Preparar las herramientas
 2. Generar un QR (`SKU-1042`)
