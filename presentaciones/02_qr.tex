@@ -1,0 +1,86 @@
+\documentclass[aspectratio=169]{beamer}
+\input{preamble}
+
+\title{Parte 2: Leer códigos QR}
+\subtitle{\libreta{02\_taller\_qr.ipynb}}
+\author{Taller de IA}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{De la Parte 1 a esta}
+  En la Parte 1 una red \textbf{aprendió} a leer dígitos y, en el paso 8, corrió con OpenCV (\texttt{cv2.dnn}).
+
+  Aquí \textbf{no hay red}. En software el caso típico es al revés: \textbf{tú eliges el patrón}.
+
+  Pregunta de la serie: \pregunta\\
+  Respuesta: un \textbf{texto} (SKU, URL, token).
+\end{frame}
+
+\begin{frame}{Objetivo}
+  \begin{enumerate}
+    \item Generar un QR a partir de un string
+    \item Detectarlo y \textbf{decodificar} el texto
+    \item Conectar eso a una mini-app: catálogo de productos
+  \end{enumerate}
+
+  OpenCV ya sabe generar y leer QR. No hace falta webcam.
+\end{frame}
+
+\begin{frame}{Un QR es un contrato}
+  El backend (o la libreta) escribe un string.\\
+  Cualquier cámara + decoder debe devolver \emph{el mismo} string.
+
+  Ejemplo: \texttt{SKU-1042}
+
+  \texttt{QRCodeEncoder.encode} produce la cuadrícula.\\
+  Se agranda con vecino más cercano y se deja \textbf{margen blanco}.
+\end{frame}
+
+\begin{frame}{Detectar y decodificar}
+  \texttt{detectAndDecode} entrega lo que una app necesita:
+
+  \begin{itemize}
+    \item \textbf{dónde} --- 4 esquinas en píxeles (recuadro en la UI)
+    \item \textbf{qué} --- el texto (query, deep link, token)
+  \end{itemize}
+
+  Si no hay QR, el texto sale \textbf{vacío}. En producción es un error de usuario, no una excepción.
+\end{frame}
+
+\begin{frame}{Mini-app: catálogo}
+  La visión termina en el string. El dominio no sabe de OpenCV.
+
+  \begin{enumerate}
+    \item \texttt{leer\_qr(img)} $\to$ string o fallo
+    \item \texttt{consultar(codigo)} $\to$ ficha o error de negocio
+  \end{enumerate}
+
+  En la libreta:
+  \begin{itemize}
+    \item \texttt{SKU-1042} Tornillo M4
+    \item \texttt{SKU-2088} Sensor ultrasónico
+    \item \texttt{SKU-3301} Batería (stock 0: resultado válido)
+    \item \texttt{SKU-9999} fuera del catálogo --- el decoder \textbf{sí} funcionó
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Los 4 pasos (TACO)}
+  \begin{enumerate}
+    \item Preparar las herramientas (\texttt{cv2} ya salió en la Parte 1)
+    \item Generar un QR (\texttt{SKU-1042})
+    \item Detectar y decodificar
+    \item Escanear $\to$ consultar catálogo
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Siguiente}
+  Abre \libreta{03\_taller\_aruco.ipynb} (diapositivas: \libreta{03\_aruco.pdf}).
+
+  Sigue siendo OpenCV y una etiqueta diseñada, pero ArUco no carga una URL: carga un \textbf{ID} para que un robot sepa \emph{qué estación} ve y \emph{dónde}.
+\end{frame}
+
+\end{document}

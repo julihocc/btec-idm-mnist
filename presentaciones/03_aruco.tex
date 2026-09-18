@@ -1,0 +1,88 @@
+\documentclass[aspectratio=169]{beamer}
+\input{preamble}
+
+\title{Parte 3: Leer etiquetas ArUco}
+\subtitle{\libreta{03\_taller\_aruco.ipynb}}
+\author{Taller de IA}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{De la Parte 2 a esta}
+  En la Parte 2, \texttt{cv2} decodificó un \textbf{texto} para una app (SKU, catálogo).
+
+  Aquí el destino no es inventario: es un \textbf{robot}. Pegamos un marcador ArUco.
+
+  Pregunta de la serie: \pregunta\\
+  Respuesta: ``estación Almacén, en este punto de la foto''.
+\end{frame}
+
+\begin{frame}{Objetivo}
+  \begin{enumerate}
+    \item Generar un marcador (como imprimir una etiqueta)
+    \item Detectar su \textbf{ID} y sus \textbf{esquinas}
+    \item Leer tres estaciones en una escena: Entrada, Almacén, Salida
+  \end{enumerate}
+
+  No hace falta webcam ni robot físico.
+\end{frame}
+
+\begin{frame}{Diccionario ArUco}
+  \texttt{DICT\_4X4\_50}: 50 IDs (0--49) en una cuadrícula $4\times4$.
+
+  El ID es el número que leerá el detector.
+
+  \texttt{generateImageMarker} dibuja el patrón.\\
+  Hay que dejar un \textbf{margen blanco}: si el cuadrado llega al borde, OpenCV no lo ve.
+\end{frame}
+
+\begin{frame}{Qué devuelve el detector}
+  \texttt{detectMarkers}:
+
+  \begin{itemize}
+    \item \textbf{esquinas} --- los 4 vértices, en píxeles
+    \item \textbf{ids} --- el número leído
+    \item \textbf{rechazados} --- cuadrados que no coincidieron con el diccionario
+  \end{itemize}
+
+  El \textbf{centro} (promedio de las esquinas) es la posición 2D.
+\end{frame}
+
+\begin{frame}{Tres estaciones}
+  Tabla que el robot tendría en código:
+
+  \begin{tabular}{@{}cl@{}}
+    \toprule
+    ID & Estación \\
+    \midrule
+    3 & Entrada \\
+    7 & Almacén \\
+    12 & Salida \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{1em}
+  En la corrida: Entrada $x\approx140$, Almacén $x\approx380$, Salida $x\approx620$.
+\end{frame}
+
+\begin{frame}{Los 4 pasos (TACO)}
+  \begin{enumerate}
+    \item Preparar las herramientas
+    \item Generar un marcador (con margen blanco)
+    \item Detectar ID y esquinas
+    \item Escena con tres estaciones
+  \end{enumerate}
+
+  \texttt{cv2} ya salió en las Partes 1 (\texttt{dnn}) y 2 (QR). Aquí usamos el módulo \texttt{aruco}.
+\end{frame}
+
+\begin{frame}{Siguiente}
+  Abre \libreta{04\_taller\_moda.ipynb} (diapositivas: \libreta{04\_moda.pdf}).
+
+  Dataset abierto de ropa (Fashion-MNIST) y un \textbf{reto} con OpenCV: distinguir calzado \textbf{sin} entrenar una red.
+\end{frame}
+
+\end{document}

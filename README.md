@@ -9,6 +9,8 @@ Un solo taller en **cuatro partes**. La pregunta es siempre la misma: *¿qué ha
 
 Hazlas en ese orden. Cada notebook usa TACO: Tarea, Enfoque, Código, Resultado.
 
+Diapositivas Beamer (una maestra y una por parte) en `presentaciones/`. Compilar: `python presentaciones/build.py`.
+
 ## Entorno
 
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)

@@ -1,0 +1,100 @@
+\documentclass[aspectratio=169]{beamer}
+\input{preamble}
+
+\title{Parte 4: Reto de visión en moda}
+\subtitle{\libreta{04\_taller\_moda.ipynb}}
+\author{Taller de IA}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Esta parte es un reto}
+  Las partes 1--3 ya dieron recetas. Aquí el estudiante \textbf{completa} una función.
+
+  Dominio: \textbf{moda}. Dataset abierto \textbf{Fashion-MNIST} (Zalando).
+
+  Keras solo \textbf{carga} los datos. OpenCV \textbf{mide} la forma. Sin entrenar.
+
+  Pregunta de la serie: \pregunta\\
+  Respuesta: \textbf{calzado} o no.
+\end{frame}
+
+\begin{frame}{Fashion-MNIST}
+  \begin{itemize}
+    \item 70{,}000 imágenes $28\times28$, mismas reglas que MNIST
+    \item 10 clases: camiseta, pantalón, jersey, vestido, abrigo, sandalia, camisa, zapatilla, bolso, bota
+    \item \textbf{Calzado} = sandalia (5), zapatilla (7), bota (9)
+  \end{itemize}
+
+  Cabe en clase: no hay Kaggle ni gigabytes.
+\end{frame}
+
+\begin{frame}{Kit OpenCV (pasos guiados)}
+  \begin{enumerate}
+    \item Cargar Fashion-MNIST
+    \item Ver las 10 clases
+    \item Umbral, \texttt{findContours}, caja, área, aspecto (\texttt{ancho/alto})
+  \end{enumerate}
+
+  Pista visual: una camiseta suele ser más alta que ancha; una zapatilla, al revés.
+\end{frame}
+
+\begin{frame}[fragile]{El reto: \texttt{es\_calzado}}
+  Completar:
+  \begin{verbatim}
+  def es_calzado(img):
+      # True si sandalia, zapatilla o bota
+  \end{verbatim}
+
+  \begin{itemize}
+    \item Solo NumPy y OpenCV
+    \item \textbf{Prohibido} entrenar o usar \texttt{model.predict}
+    \item Meta: \textbf{$>$80\,\%} en las 2{,}000 primeras imágenes de prueba
+    \item Decir siempre ``no es calzado'' da 70\,\% y \textbf{no} cuenta
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Baseline}
+  La libreta trae un clasificador ingenuo: \textbf{brillo medio}.
+
+  En la corrida guardada: \textbf{42{,}8\,\%} --- lejos del 80\,\%.
+
+  Pistas (elige el estudiante):
+  \begin{itemize}
+    \item \texttt{binarizar} + \texttt{medidas}
+    \item ¿más ancho que alto?
+    \item ¿área más chica que una camiseta?
+    \item combina reglas con \texttt{and} / \texttt{or}
+  \end{itemize}
+
+  La solución \textbf{no} está escrita en la libreta.
+\end{frame}
+
+\begin{frame}{Cómo evaluamos}
+  \texttt{evaluar(es\_calzado)} recorre 2{,}000 imágenes de prueba y reporta el porcentaje.
+
+  Verde / rojo en 8 ejemplos para depurar a ojo.
+
+  Extra opcional (ya no es el reto): las 10 clases con el MLP de la Parte 1.
+\end{frame}
+
+\begin{frame}{Cierre de la serie}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Parte & Respuesta & Herramienta \\
+    \midrule
+    1 & dígito & Keras + \texttt{cv2.dnn} \\
+    2 & texto SKU & QR OpenCV \\
+    3 & ID estación & ArUco \\
+    4 & calzado o no & \textbf{tu} regla OpenCV \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{1em}
+  Cuatro maneras de responder \pregunta
+\end{frame}
+
+\end{document}

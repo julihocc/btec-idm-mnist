@@ -16,5 +16,15 @@ models/
 checkpoints/
 temp/
 *.log
+presentaciones/_build/
+presentaciones/*.aux
+presentaciones/*.nav
+presentaciones/*.out
+presentaciones/*.snm
+presentaciones/*.toc
+presentaciones/*.fls
+presentaciones/*.fdb_latexmk
+presentaciones/*.synctex.gz
+presentaciones/*.pdf
 CLAUDE.md
 .github/
