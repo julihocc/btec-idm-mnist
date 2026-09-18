@@ -1,7 +1,7 @@
 [project]
 name = "btec-idm-mnist"
 version = "0.1.0"
-description = "Taller: MNIST (Keras), códigos QR y marcadores ArUco (OpenCV)"
+description = "Taller: MNIST, QR, ArUco y reto Fashion-MNIST (OpenCV)"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 dependencies = [
