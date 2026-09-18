@@ -2,11 +2,11 @@
 
 Notebook introductorio para entrenar una red neuronal simple (MLP) con Keras sobre el dataset **MNIST** y clasificar dígitos escritos a mano (0–9).
 
-Objetivo del taller: superar **95%** de precisión en el conjunto de prueba. En la ejecución guardada el modelo alcanza **97.40%**.
+Objetivo del taller: superar **95%** de precisión en el conjunto de prueba (en la ejecución guardada el modelo alcanza **97.23%**) y usar esa red como percepción de un **robot 2D simulado**.
 
 ## Qué vas a hacer
 
-El notebook `taller_ia_mnist.ipynb` sigue siete pasos (TACO: Tarea, Enfoque, Código, Resultado):
+El notebook `taller_ia_mnist.ipynb` sigue nueve pasos (TACO: Tarea, Enfoque, Código, Resultado):
 
 1. Configurar el entorno (TensorFlow, NumPy, Matplotlib)
 2. Cargar y visualizar MNIST (60,000 imágenes de entrenamiento y 10,000 de prueba)
@@ -15,6 +15,10 @@ El notebook `taller_ia_mnist.ipynb` sigue siete pasos (TACO: Tarea, Enfoque, Có
 5. Entrenar 5 épocas
 6. Evaluar en prueba y graficar el aprendizaje
 7. Ver predicciones y, en el bonus, inspeccionar un dígito del conjunto de prueba
+8. Traducir cada dígito a un comando de robot, rechazando lecturas con confianza menor al 85%
+9. Ejecutar una misión: el robot 2D (matplotlib) sigue los comandos y no se mueve si la percepción es incierta
+
+Los pasos 8 y 9 no necesitan hardware: cada imagen de prueba simula un fotograma de cámara.
 
 ## Requisitos
 
