@@ -1,9 +1,10 @@
-# Taller de IA: de ver dígitos a leer etiquetas
+# Taller de IA: de ver dígitos a leer códigos
 
-Un solo taller en **dos partes**. La pregunta es siempre la misma: *¿qué hay en esta imagen?*
+Un solo taller en **tres partes**. La pregunta es siempre la misma: *¿qué hay en esta imagen?*
 
 1. **Parte 1** — la máquina **aprende** a leer dígitos a mano (Keras + MNIST)
-2. **Parte 2** — la máquina **usa un detector que ya existe** para leer marcadores ArUco (OpenCV)
+2. **Parte 2** — visión en **software**: generar y leer un QR, y usarlo en una mini-app (OpenCV)
+3. **Parte 3** — visión en **robótica**: marcadores ArUco, ID + posición (OpenCV)
 
 Hazlas en ese orden. Cada notebook usa TACO: Tarea, Enfoque, Código, Resultado.
 
@@ -41,16 +42,27 @@ uv run jupyter notebook taller_ia_mnist.ipynb
 | Densa | 10 | Softmax | 1,290 |
 | **Total** | | | **101,770** |
 
-## Parte 2 — `taller_vision_aruco.ipynb`
+## Parte 2 — `taller_vision_qr.ipynb`
 
-Cuando el entorno se puede etiquetar, no hace falta otra red: OpenCV detecta **ArUco** (ID + esquinas).
+Un QR es un **texto** dentro de una imagen. OpenCV lo genera y lo lee; tu código usa el string (catálogo, URL, ticket). No se entrena ninguna red. No hace falta webcam.
+
+1. Preparar las herramientas
+2. Generar un QR (`SKU-1042`)
+3. Detectar y decodificar
+4. Mini-app: escanear → consultar catálogo (incluido un código inexistente)
+
+```bash
+uv run jupyter notebook taller_vision_qr.ipynb
+```
+
+## Parte 3 — `taller_vision_aruco.ipynb`
+
+Cuando el entorno se etiqueta para un robot, OpenCV detecta **ArUco** (ID + esquinas), no un SKU de tienda.
 
 1. Preparar las herramientas
 2. Generar un marcador (con margen blanco)
 3. Detectar ID y esquinas
 4. Tres estaciones: Entrada, Almacén, Salida
-
-No hace falta webcam. Al final hay un extra opcional para cámara.
 
 ```bash
 uv run jupyter notebook taller_vision_aruco.ipynb
