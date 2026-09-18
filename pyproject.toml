@@ -1,0 +1,16 @@
+[project]
+name = "btec-idm-mnist"
+version = "0.1.0"
+description = "Taller de inteligencia artificial: reconocimiento de dígitos manuscritos con MNIST"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "ipykernel>=6.0",
+    "jupyter>=1.1",
+    "matplotlib>=3.8",
+    "numpy>=2.0",
+    "tensorflow==2.20.0",
+]
+
+[tool.uv]
+package = false
