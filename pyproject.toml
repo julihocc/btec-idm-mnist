@@ -1,7 +1,7 @@
 [project]
 name = "btec-idm-mnist"
 version = "0.1.0"
-description = "Taller de inteligencia artificial: reconocimiento de dígitos manuscritos con MNIST"
+description = "Taller: dígitos MNIST (Keras) y marcadores ArUco (OpenCV)"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 dependencies = [
@@ -9,6 +9,7 @@ dependencies = [
     "jupyter>=1.1",
     "matplotlib>=3.8",
     "numpy>=2.0",
+    "opencv-python>=5.0.0.93",
     "tensorflow==2.20.0",
 ]
 
