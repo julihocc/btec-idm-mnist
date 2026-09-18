@@ -2,17 +2,21 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+SHARED = Path(__file__).resolve().parent
+
 DECKS = (
-    "00_serie.tex",
-    "01_mnist.tex",
-    "02_qr.tex",
-    "03_aruco.tex",
-    "04_moda.tex",
+    ROOT / "00_serie" / "presentaciones" / "00_serie.tex",
+    ROOT / "01_mnist" / "presentaciones" / "01_mnist.tex",
+    ROOT / "02_qr" / "presentaciones" / "02_qr.tex",
+    ROOT / "03_aruco" / "presentaciones" / "03_aruco.tex",
+    ROOT / "04_moda" / "presentaciones" / "04_moda.tex",
 )
 
 
@@ -26,6 +30,14 @@ def engine() -> list[str]:
     raise FileNotFoundError("Neither latexmk nor pdflatex is on PATH")
 
 
+def texinputs_env() -> dict[str, str]:
+    env = os.environ.copy()
+    sep = ";" if os.name == "nt" else ":"
+    # Trailing // = search recursively; trailing sep = keep default TeX tree.
+    env["TEXINPUTS"] = str(SHARED) + "//" + sep + env.get("TEXINPUTS", "")
+    return env
+
+
 def compile_deck(tex: Path, outdir: Path) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
     cmd = engine() + [f"-output-directory={outdir}", tex.name]
@@ -33,6 +45,7 @@ def compile_deck(tex: Path, outdir: Path) -> Path:
     proc = subprocess.run(
         cmd,
         cwd=tex.parent,
+        env=texinputs_env(),
         capture_output=True,
         text=True,
         encoding="utf-8",
@@ -44,7 +57,6 @@ def compile_deck(tex: Path, outdir: Path) -> Path:
     )
     if proc.returncode != 0:
         raise RuntimeError(f"{tex.name} failed (exit {proc.returncode}); see {log_path}")
-    # latexmk/pdflatex write PDF next to -output-directory
     pdf = outdir / (tex.stem + ".pdf")
     if not pdf.is_file() or pdf.stat().st_size == 0:
         raise RuntimeError(f"{tex.name} produced no PDF at {pdf}")
@@ -56,14 +68,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--outdir",
         type=Path,
-        default=Path(__file__).resolve().parent / "_build",
+        default=SHARED / "_build",
     )
     args = parser.parse_args(argv)
-    root = Path(__file__).resolve().parent
-    pdfs = []
-    for name in DECKS:
-        pdfs.append(compile_deck(root / name, args.outdir.resolve()))
-        print("ok", pdfs[-1])
+    for tex in DECKS:
+        if not tex.is_file():
+            raise FileNotFoundError(tex)
+        pdf = compile_deck(tex, args.outdir.resolve())
+        print("ok", pdf)
     return 0
 
 

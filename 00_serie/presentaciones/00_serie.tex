@@ -129,14 +129,14 @@
 \begin{frame}[fragile]{Entorno}
   \begin{verbatim}
 uv sync
-uv run jupyter notebook 01_taller_mnist.ipynb
+uv run jupyter notebook 01_mnist/codigo/01_taller_mnist.ipynb
   \end{verbatim}
 
   Python 3.11 o 3.12. MNIST y Fashion-MNIST se descargan la primera vez.
 
-  Compilar estas diapositivas (desde \texttt{presentaciones/}):
+  Compilar las diapositivas:
   \begin{verbatim}
-latexmk -pdf 00_serie.tex
+python _shared/build.py
   \end{verbatim}
 \end{frame}
 
